@@ -3,9 +3,9 @@ import { networkConfig } from '../config/networkConfig'
 
 let ws = null
 
-export function connectServicioLlenado({ litros, densidad, onPesoUpdate, onFinish, onError }) {
+export function connectServicioLavado({onFinish, onError }) {
   if (ws) {
-    console.warn('[WS] servicioLlenado ya conectado.')
+    console.warn('[WS] servicioLavado ya conectado.')
     return
   }
 
@@ -14,13 +14,11 @@ export function connectServicioLlenado({ litros, densidad, onPesoUpdate, onFinis
     ws = socket // guardamos referencia global por si queremos cerrar luego
 
     socket.onopen = () => {
-      console.log('[WS] Conectado al servicio de llenado.')
+      console.log('[WS] Conectado al servicio de Lavado.')
 
       // ✅ usamos `socket.send`, no `ws.send`
       const msg = {
-        statusStart: true,
-        cantidadVendida: litros * 1000,
-        densidad,
+        statusStart: true
       }
 
       try {
@@ -37,17 +35,12 @@ export function connectServicioLlenado({ litros, densidad, onPesoUpdate, onFinis
         const msg = JSON.parse(event.data)
 
         if (msg.statusStop === true) {
-          console.log('[WS] Proceso de llenado finalizado.')
+          console.log('[WS] Proceso de lavado finalizado.')
           onFinish?.()
           disconnectServicioLlenado()
           return
         }
 
-        //if ('peso' in msg && typeof msg.peso === 'number') {
-        if ('peso' in msg) {
-          onPesoUpdate?.(msg.peso)
-          console.log(msg.peso)
-        }
       } catch (err) {
         console.error('[WS] Error procesando mensaje:', err)
         onError?.(err)
@@ -70,7 +63,7 @@ export function connectServicioLlenado({ litros, densidad, onPesoUpdate, onFinis
   }
 }
 
-export function disconnectServicioLlenado() {
+export function disconnectServicioLavado() {
   if (ws) {
     try {
       ws.close()

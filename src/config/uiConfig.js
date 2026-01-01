@@ -1,18 +1,22 @@
 export const uiConfig = {
-  prices: { 1: 700, 2: 1300, 3: 1900 },
+  prices: { lavado: 1500, secado: 1500, ambos: 2500, suavizante: 500 },
 
   messages: {
     start: 'Toque el logo para comenzar',
     footer: 'Created by',
     checkingStock: 'Verificando nivel de stock...',
     lowStock: 'Nivel de stock bajo, no podemos proceder con la venta',
-    timeoutStockService : 'Servicio de stock no disponible',
-    qty: '¿Cuántos litros desea cargar?',
+    timeoutStockService: 'Servicio de stock no disponible',
+    serviceType: 'Selecciona el tipo de servicio',
+
+    softer: prices =>
+      `¿Agregas suavizante por $${prices.suavizante}?`,
+
     paySelection: litros => `Usted ha seleccionado ${litros} litro(s)`,
     paying: 'Siga las instrucciones en el pinpad',
     printing: 'Pago procesado, generando comprobante',
-    fillInsert: 'Introduzca el bidón en la ranura',
-    fillReady: 'Presione botón iniciar para comenzar el llenado',
+    fillInsert: 'Introduzca los artìculos y presione comenzar para iniciar el ciclo',
+    fillReady: '¿Seguro que desea comenzar el ciclo?. Una vez iniciado, no puede detenerse.',
     preparingFilling: 'Comenzando Llenado',
     filling: 'Llenando...',
     endFilling: 'Proceso terminado',
@@ -27,7 +31,8 @@ export const uiConfig = {
     startFill: 'Comenzar'
   },
 
-  saleTimeoutMs: 3 * 60 * 1000 // 3 minutos
+  saleTimeoutMs: 3 * 60 * 1000
 }
+
 
 

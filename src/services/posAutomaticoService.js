@@ -12,7 +12,7 @@ let ws = null
  *
  * @returns Promise<{ status: boolean, message: string }>
  */
-export function posAutomatico(action, amount, ticket, timeoutMs = 15000) {
+export function posAutomatico(action, amount, ticket, service, softer, timeoutMs = 15000) {
   return new Promise((resolve) => {
     if (ws) {
       console.warn('[WS][POS] Socket ya existe, cerrando anterior')
@@ -37,7 +37,9 @@ export function posAutomatico(action, amount, ticket, timeoutMs = 15000) {
       const payload = {
         action,
         amount,
-        ticket
+        ticket,
+        service,
+        softer
       }
 
       console.log('[WS][POS] Enviando:', payload)

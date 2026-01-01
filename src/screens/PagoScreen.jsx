@@ -1,15 +1,13 @@
-import { useParams, useNavigate } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
+import { useState } from 'react'
 import ScreenWrapper from '../components/ScreenWrapper.jsx'
-import Button from '../components/Button.jsx'
+import ButtonPay from '../components/ButtonPay.jsx'
 import LoadingSpinner from '../components/LoadingSpinner.jsx'
 import { uiConfig } from '../config/uiConfig.js'
 import { posAutomatico } from '../services/posAutomaticoService.js'
 import { ImprimirBoleta } from '../services/mockServices.js'
-import ButtonPay from '../components/ButtonPay.jsx'
-import { Home } from 'lucide-react'  // 👈 icono
+import { Home } from 'lucide-react'
 import CornerLogo from "../components/CornerLogo.jsx";
-
 
 function getTicketCountForToday() {
   try {
@@ -30,7 +28,7 @@ function getTicketCountForToday() {
       localStorage.setItem('ticketCounter', JSON.stringify(obj))
       return obj.count
     }
-  } catch (err) {
+  } catch {
     const fallback = { date: new Date().toISOString().slice(0, 10), count: 1 }
     localStorage.setItem('ticketCounter', JSON.stringify(fallback))
     return fallback.count
@@ -51,44 +49,66 @@ function formatTimeForTicket(d = new Date()) {
 }
 
 export default function PagoScreen() {
-  const { litros } = useParams()
   const navigate = useNavigate()
-  const [state, setState] = useState('ready') // ready | waiting | printing
+  const { state } = useLocation()   // 👈 AQUÍ llega el objeto
+  const [screenState, setScreenState] = useState('ready') // ready | waiting | printing
 
+  // 🛡️ Seguridad: evitar acceso directo
+  if (!state || !state.total) {
+    navigate('/error')
+    return null
+  }
+
+  const { servicio, suavizante, total } = state
+  const price = total   // 👈 lo que pediste
 
   const handlePay = async () => {
-    setState('waiting')
-    const price = uiConfig.prices[Number(litros)]
+    setScreenState('waiting')
+
     const count = getTicketCountForToday()
     const ticket = `${formatDateForTicket()}${formatTimeForTicket()}${String(count).padStart(4, '0')}`
 
-    const saleResult = await posAutomatico("sale", price, ticket, uiConfig.saleTimeoutMs)
+    const saleResult = await posAutomatico(
+      "sale",
+      price,
+      ticket,
+      servicio,
+      suavizante,
+      uiConfig.saleTimeoutMs
+    )
+
     if (!saleResult.status) {
       console.error('Sale failed:', saleResult)
       navigate('/error')
       return
     }
 
-    setState('printing')
+    setScreenState('printing')
     const printR = await ImprimirBoleta()
+
     if (printR === 'ok') {
-      navigate(`/fill/${litros}`)
+      navigate('/laundryReady', {
+        state: {
+          servicio,
+          suavizante,
+          total
+        }
+      })
     } else {
       navigate('/error')
     }
-    navigate(`/fill/${litros}`)
   }
 
   return (
     <ScreenWrapper>
-      {state === 'ready' && (
+      {screenState === 'ready' && (
         <>
-          <h1 className="screen-title">{uiConfig.messages.paySelection(litros)}</h1>
+          <h1 className="screen-title">Total: ${total}</h1>
+
           <div style={{ marginTop: 12 }}>
             <ButtonPay onClick={handlePay} />
           </div>
-          <h1 className="screen-title">Total: ${uiConfig.prices[Number(litros)]}</h1>
-          {/* 👇 Botón flotante de Home */}
+
           <button
             className="home-button"
             onClick={() => navigate('/')}
@@ -99,23 +119,21 @@ export default function PagoScreen() {
         </>
       )}
 
-      {state === 'waiting' && (
+      {screenState === 'waiting' && (
         <>
           <h1 className="screen-title">{uiConfig.messages.paying}</h1>
           <LoadingSpinner />
         </>
       )}
 
-      {state === 'printing' && (
+      {screenState === 'printing' && (
         <>
           <h1 className="screen-title">{uiConfig.messages.printing}</h1>
           <LoadingSpinner />
         </>
       )}
 
-
       <CornerLogo />
-
     </ScreenWrapper>
   )
 }

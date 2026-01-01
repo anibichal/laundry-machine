@@ -3,18 +3,17 @@ import { useEffect, useState } from 'react'
 import ScreenWrapper from '../components/ScreenWrapper.jsx'
 import { uiConfig } from '../config/uiConfig.js'
 import {
-  connectServicioLlenado,
-  disconnectServicioLlenado,
-} from '../services/servicioLlenadoService.js'
+  connectServicioLavado,
+  disconnectServicioLavado,
+} from '../services/servicioLavadoService.js'
 import { playSound } from "../utils/AudioManager.js"; //
 import CornerLogo from "../components/CornerLogo.jsx";
 import FillingAnimation from "../components/FillingAnimation.jsx";
 
 export default function FillingScreen() {
-  const { litros } = useParams()
   const navigate = useNavigate()
   const [status, setStatus] = useState('preparing') // preparing | filling | finished
-  const [peso, setPeso] = useState(null)
+ 
 
   useEffect(() => {
     let mounted = true
@@ -24,17 +23,8 @@ export default function FillingScreen() {
     playSound("llenando");
 
     // Paso 2: conectar al websocket
-    connectServicioLlenado({
-      litros: Number(litros),
-      densidad: uiConfig.messages.densidadLiquido,
+    connectServicioLavado({
       
-      // Actualización del peso
-      onPesoUpdate: (nuevoPeso) => {
-        if (!mounted) return
-        if (status !== 'filling') setStatus('filling')
-        setPeso(nuevoPeso)
-      },
-
       // Fin del proceso
       onFinish: () => {
         if (!mounted) return
@@ -53,7 +43,7 @@ export default function FillingScreen() {
     // Cleanup
     return () => {
       mounted = false
-      disconnectServicioLlenado()
+      disconnectServicioLavado()
     }
   }, [])
 
@@ -73,9 +63,9 @@ export default function FillingScreen() {
       {status === 'finished' && (
         <h1 className="screen-title">{uiConfig.messages.endFilling}</h1>
       )}
-      <>
+      
         <CornerLogo />
-      </>
+      
     </ScreenWrapper>
   )
 }
