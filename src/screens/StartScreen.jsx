@@ -17,12 +17,12 @@ export default function StartScreen() {
 
   return (
     <ScreenWrapper>
-      (
+      
         <>
           <h1 className="screen-title">{uiConfig.messages.start}</h1>
           <EmiLogo onClick={handleStart} />
         </>
-      )
+      
      
       <CornerLogo />
    

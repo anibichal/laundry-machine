@@ -53,12 +53,6 @@ export default function PagoScreen() {
   const { state } = useLocation()   // 👈 AQUÍ llega el objeto
   const [screenState, setScreenState] = useState('ready') // ready | waiting | printing
 
-  // 🛡️ Seguridad: evitar acceso directo
-  if (!state || !state.total) {
-    navigate('/error')
-    return null
-  }
-
   const { servicio, suavizante, total } = state
   const price = total   // 👈 lo que pediste
 
@@ -103,7 +97,7 @@ export default function PagoScreen() {
     <ScreenWrapper>
       {screenState === 'ready' && (
         <>
-          <h1 className="screen-title">Total: ${total}</h1>
+          <h1 className="screen-title">Total: ${price}</h1>
 
           <div style={{ marginTop: 12 }}>
             <ButtonPay onClick={handlePay} />

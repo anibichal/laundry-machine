@@ -21,9 +21,9 @@ export default function LaundryServiceScreen() {
 
   // 👉 Mapea servicio → precio base
   const SERVICE_PRICE_MAP = {
-    Lavado: uiConfig.prices[1],
-    Secado: uiConfig.prices[2],
-    Ambos: uiConfig.prices[3],
+    Lavado: uiConfig.prices.lavado,
+    Secado: uiConfig.prices.secado,
+    Ambos: uiConfig.prices.ambos,
   };
 
   const handleServiceSelect = (tipoServicio) => {
@@ -34,7 +34,7 @@ export default function LaundryServiceScreen() {
   const handleSoftenerSelect = (suavizante) => {
     const basePrice = SERVICE_PRICE_MAP[servicio];
     const total =
-      basePrice + (suavizante ? uiConfig.prices[4] : 0);
+      basePrice + (suavizante ? uiConfig.prices.suavizante : 0);
 
     navigate("/pago", {
       state: {
@@ -59,17 +59,17 @@ export default function LaundryServiceScreen() {
           <>
             <div className="qty-item">
               <ButtonOne onClick={() => handleServiceSelect("Lavado")} />
-              <h1 className="qty-price">${uiConfig.prices[1]}</h1>
+              <h1 className="qty-price">${uiConfig.prices.lavado}</h1>
             </div>
 
             <div className="qty-item">
               <ButtonTwo onClick={() => handleServiceSelect("Secado")} />
-              <h1 className="qty-price">${uiConfig.prices[2]}</h1>
+              <h1 className="qty-price">${uiConfig.prices.secado}</h1>
             </div>
 
             <div className="qty-item">
               <ButtonThree onClick={() => handleServiceSelect("Ambos")} />
-              <h1 className="qty-price">${uiConfig.prices[3]}</h1>
+              <h1 className="qty-price">${uiConfig.prices.ambos}</h1>
             </div>
           </>
         )}

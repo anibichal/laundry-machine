@@ -27,12 +27,6 @@ useEffect(() => {
   return () => clearTimeout(timer)
 }, [])
 
-    // 🛡️ Seguridad: evitar acceso directo
-  if (!state || !state.total) {
-    navigate('/error')
-    return null
-  }
-
   const { servicio, suavizante, total } = state
 
 
