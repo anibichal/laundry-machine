@@ -10,7 +10,7 @@ export function connectServicioLavado({onFinish, onError }) {
   }
 
   try {
-    const socket = new WebSocket(networkConfig.wsUrlServicioLlenado)
+    const socket = new WebSocket(networkConfig.wsUrlServicioLavado)
     ws = socket // guardamos referencia global por si queremos cerrar luego
 
     socket.onopen = () => {
@@ -37,7 +37,7 @@ export function connectServicioLavado({onFinish, onError }) {
         if (msg.statusStop === true) {
           console.log('[WS] Proceso de lavado finalizado.')
           onFinish?.()
-          disconnectServicioLlenado()
+          disconnectServicioLavado()
           return
         }
 
