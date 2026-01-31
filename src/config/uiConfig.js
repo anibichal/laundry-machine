@@ -13,8 +13,8 @@ export const uiConfig = {
       `¿Agregas suavizante por $${prices.suavizante}?`,
 
     paySelection: litros => `Usted ha seleccionado ${litros} litro(s)`,
-    paying: 'Siga las instrucciones en el pinpad',
-    printing: 'Pago procesado, generando comprobante',
+    paying: 'Opere tarjeta.',
+    printing: 'Pago completado con éxito.',
     fillInsert: 'Introduzca los artìculos y presione comenzar para iniciar el ciclo',
     fillReady: '¿Seguro que desea comenzar el ciclo?. Una vez iniciado, no puede detenerse.',
     preparingFilling: 'Comenzando Llenado',
