@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import ScreenWrapper from '../components/ScreenWrapper.jsx'
 import { uiConfig } from '../config/uiConfig.js'
 import { connectBidonSocket, disconnectBidonSocket } from '../services/bidonService.js'
@@ -13,24 +13,20 @@ export default function LaundryReadyScreen() {
   const { state } = useLocation()   // 👈 AQUÍ llega el objeto
   const navigate = useNavigate()
   const [status, setStatus] = useState('waiting')
+  const { servicio, suavizante, total } = state
   
 
   useEffect(() => {
     playSound("coloqueEnvase");
   }, []);
 
-useEffect(() => {
-  const timer = setTimeout(() => {
-    setStatus('ready')
-  }, 5000)
 
-  return () => clearTimeout(timer)
-}, [])
-
-  const { servicio, suavizante, total } = state
+   const handleStartButton = async () => {
+      setStatus('ready')
+  }
 
 
-  const handleStartButton = async () => {
+  const handleStartDefinitlyButton = async () => {
       navigate('/washing', {
         state: {
           servicio,
@@ -45,13 +41,13 @@ useEffect(() => {
       {status === 'waiting' ? (
         <>
           <h1 className="screen-title">{uiConfig.messages.fillInsert}</h1>
-          <InsertBottleAnimation />
+          <InsertBottleAnimation onClick={() => handleStartButton() }/>
         </>
       ) : (
         <>
           <h1 className="screen-title">{uiConfig.messages.fillReady}</h1>
           <div style={{ marginTop: 12 }}>
-            <ButtonStart onClick={() => handleStartButton() } />
+            <ButtonStart onClick={() => handleStartDefinitlyButton() } />
           </div>
         </>
       )}

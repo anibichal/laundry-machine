@@ -55,6 +55,7 @@ export default function PagoScreen() {
 
   const { servicio, suavizante, total } = state
   const price = total   // 👈 lo que pediste
+ 
 
   const handlePay = async () => {
     setScreenState('waiting')
@@ -70,6 +71,8 @@ export default function PagoScreen() {
       suavizante,
       uiConfig.saleTimeoutMs
     )
+
+     
 
     if (!saleResult.status) {
       console.error('Sale failed:', saleResult)
