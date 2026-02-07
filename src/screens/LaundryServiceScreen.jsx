@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ScreenWrapper from "../components/ScreenWrapper.jsx";
-import ButtonOne from "../components/ButtonOne.jsx";
-import ButtonTwo from "../components/ButtonTwo.jsx";
-import ButtonThree from "../components/ButtonThree.jsx";
-import ButtonFour from "../components/ButtonFour.jsx";
-import ButtonFive from "../components/ButtonFive.jsx";
+import ButtonLavado from "../components/ButtonLavado.jsx";
+import ButtonSecado from "../components/ButtonSecado.jsx";
+import ButtonLavadoSecado from "../components/ButtonLavadoSecado.jsx";
+import ButtonSi from "../components/ButtonSi.jsx";
+import ButtonNo from "../components/ButtonNo.jsx";
 import { uiConfig } from "../config/uiConfig.js";
 import { playSound } from "../utils/AudioManager.js";
 import CornerLogo from "../components/CornerLogo.jsx";
@@ -58,17 +58,17 @@ export default function LaundryServiceScreen() {
         {!servicio && (
           <>
             <div className="qty-item">
-              <ButtonOne onClick={() => handleServiceSelect("Lavado")} />
+              <ButtonLavado onClick={() => handleServiceSelect("Lavado")} />
               <h1 className="qty-price">${uiConfig.prices.lavado}</h1>
             </div>
 
             <div className="qty-item">
-              <ButtonTwo onClick={() => handleServiceSelect("Secado")} />
+              <ButtonSecado onClick={() => handleServiceSelect("Secado")} />
               <h1 className="qty-price">${uiConfig.prices.secado}</h1>
             </div>
 
             <div className="qty-item">
-              <ButtonThree onClick={() => handleServiceSelect("Ambos")} />
+              <ButtonLavadoSecado onClick={() => handleServiceSelect("Ambos")} />
               <h1 className="qty-price">${uiConfig.prices.ambos}</h1>
             </div>
           </>
@@ -78,11 +78,11 @@ export default function LaundryServiceScreen() {
         {servicio && (
           <>
             <div className="qty-item">
-              <ButtonFour onClick={() => handleSoftenerSelect(false)} />
+              <ButtonSi onClick={() => handleSoftenerSelect(true)} />
             </div>
 
             <div className="qty-item">
-              <ButtonFive onClick={() => handleSoftenerSelect(true)} />
+              <ButtonNo onClick={() => handleSoftenerSelect(false)} />
             </div>
           </>
         )}

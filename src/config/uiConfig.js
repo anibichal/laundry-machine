@@ -2,7 +2,7 @@ export const uiConfig = {
   prices: { lavado: 1500, secado: 1500, ambos: 2500, suavizante: 500 },
 
   messages: {
-    start: 'Toque el logo para comenzar',
+    start: 'Presiona el logo para comenzar',
     footer: 'Created by',
     checkingStock: 'Verificando nivel de stock...',
     lowStock: 'Nivel de stock bajo, no podemos proceder con la venta',

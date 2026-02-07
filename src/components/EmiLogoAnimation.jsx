@@ -1,7 +1,7 @@
 // EmiLogoAnimation.jsx
 import React, { useEffect, useRef } from "react";
 import Lottie from "lottie-react";
-import EmiLogo from "../assets/WelcomeAnimation.json"; // ajusta la ruta si es necesario
+import EmiLogo from "../assets/ButtonComenzar.json"; // ajusta la ruta si es necesario
 
 export default function EmiLogoAnimation({ loop = true, style = {}, onClick }) {
   const lottieRef = useRef(null);
@@ -12,7 +12,8 @@ export default function EmiLogoAnimation({ loop = true, style = {}, onClick }) {
       lottieRef.current.playSegments([0, 145], true);
     }
   }, [loop]);
-
+ 
+  
   return (
     <div
       onClick={onClick}
@@ -21,12 +22,12 @@ export default function EmiLogoAnimation({ loop = true, style = {}, onClick }) {
         cursor: onClick ? "pointer" : "default",
         ...style,
       }}
-    >
-      <Lottie
+    >  <Lottie
         lottieRef={lottieRef}
         animationData={EmiLogo}
         loop={loop} // el loop se limita por los segmentos
       />
+      
     </div>
   );
 }

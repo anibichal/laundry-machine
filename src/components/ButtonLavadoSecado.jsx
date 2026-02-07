@@ -1,9 +1,9 @@
 // EmiLogoAnimation.jsx
 import React, { useEffect, useRef } from "react";
 import Lottie from "lottie-react";
-import ButtonThreeAnimation from "../assets/ButtonThreeAnimation.json"; // ajusta la ruta si es necesario
+import ButtonLavadoSecado from "../assets/ButtonLavadoSecado.json"; // ajusta la ruta si es necesario
 
-export default function ButtonFour({ loop = true, style = {}, onClick }) {
+export default function ButtonThree({ loop = true, style = {}, onClick }) {
   const lottieRef = useRef(null);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ export default function ButtonFour({ loop = true, style = {}, onClick }) {
     >
       <Lottie
         lottieRef={lottieRef}
-        animationData={ButtonThreeAnimation}
+        animationData={ButtonLavadoSecado}
         loop={loop} // el loop se limita por los segmentos
       />
     </div>
