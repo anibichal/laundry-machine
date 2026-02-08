@@ -17,10 +17,10 @@ export const uiConfig = {
     printing: 'Pago completado con éxito.',
     Insert: 'Introduzca su ropa, cierre la tapa y presione siguiente.',
     Ready: '¿Desea comenzar el ciclo?. Una vez iniciado, no puede detenerse.',
-    preparingFilling: 'Comenzando Llenado',
+    preparingFilling: 'Proceso iniciado',
     filling: 'Llenando...',
     endFilling: 'Proceso terminado',
-    thanks: 'Muchas gracias por utilizar EMI, vuelva pronto ;)',
+    thanks: 'Muchas gracias por utilizar AlfaDRY, vuelva pronto ;)',
     densidadLiquido: 0.985,
     error: 'Ups!, algo ha salido mal. Favor vuelva a intentarlo.'
   },
