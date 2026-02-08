@@ -61,7 +61,7 @@ export default function PagoScreen() {
     setScreenState('waiting')
 
     const count = getTicketCountForToday()
-    const ticket = `${formatDateForTicket()}${formatTimeForTicket()}${String(count).padStart(4, '0')}`
+/*    const ticket = `${formatDateForTicket()}${formatTimeForTicket()}${String(count).padStart(4, '0')}`
 
     const saleResult = await posAutomatico(
       "sale",
@@ -78,7 +78,7 @@ export default function PagoScreen() {
       console.error('Sale failed:', saleResult)
       navigate('/error')
       return
-    }
+    }*/
 
     setScreenState('printing')
     const printR = await ImprimirBoleta()

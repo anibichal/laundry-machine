@@ -6,7 +6,7 @@ import { connectBidonSocket, disconnectBidonSocket } from '../services/bidonServ
 import ButtonStart from '../components/ButtonStart.jsx'
 import { playSound } from "../utils/AudioManager.js";
 import CornerLogo from "../components/CornerLogo.jsx";
-import InsertBottleAnimation from "../components/InsertBottleAnimation.jsx";
+import ButtonSiguiente from "../components/ButtonSiguiente.jsx";
 
 
 export default function LaundryReadyScreen() {
@@ -40,12 +40,12 @@ export default function LaundryReadyScreen() {
     <ScreenWrapper>
       {status === 'waiting' ? (
         <>
-          <h1 className="screen-title">{uiConfig.messages.fillInsert}</h1>
-          <InsertBottleAnimation onClick={() => handleStartButton() }/>
+          <h1 className="screen-title">{uiConfig.messages.Insert}</h1>
+          <ButtonSiguiente onClick={() => handleStartButton() }/>
         </>
       ) : (
         <>
-          <h1 className="screen-title">{uiConfig.messages.fillReady}</h1>
+          <h1 className="screen-title">{uiConfig.messages.Ready}</h1>
           <div style={{ marginTop: 12 }}>
             <ButtonStart onClick={() => handleStartDefinitlyButton() } />
           </div>

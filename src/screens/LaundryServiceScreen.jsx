@@ -27,23 +27,31 @@ export default function LaundryServiceScreen() {
   };
 
   const handleServiceSelect = (tipoServicio) => {
-    setServicio(tipoServicio);
-    //playSound("confirmar"); // opcional
-  };
+  // Caso especial: si elige Secado, no preguntar suavizante
+  if (tipoServicio === "Secado") {
+    handleSoftenerSelect(false, tipoServicio);
+    return;
+  }
 
-  const handleSoftenerSelect = (suavizante) => {
-    const basePrice = SERVICE_PRICE_MAP[servicio];
-    const total =
-      basePrice + (suavizante ? uiConfig.prices.suavizante : 0);
+  // Para Lavado y Ambos sí preguntamos suavizante
+  setServicio(tipoServicio);
+};
 
-    navigate("/pago", {
-      state: {
-        servicio,
-        suavizante,
-        total,
-      },
-    });
-  };
+const handleSoftenerSelect = (suavizante, servicioOverride = null) => {
+  const servicioFinal = servicioOverride ?? servicio;
+  const basePrice = SERVICE_PRICE_MAP[servicioFinal];
+
+  const total =
+    basePrice + (suavizante ? uiConfig.prices.suavizante : 0);
+
+  navigate("/pago", {
+    state: {
+      servicio: servicioFinal,
+      suavizante,
+      total,
+    },
+  });
+};
 
   return (
     <ScreenWrapper>
